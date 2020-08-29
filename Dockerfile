@@ -1,5 +1,4 @@
 FROM node:12.14.0-alpine3.11
-WORKDIR /app
 
 ADD package.json /app/package.json
 RUN npm config set registry http://registry.npmjs.org
@@ -11,6 +10,10 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-ADD . /app
+RUN mkdir -p /app
+
+WORKDIR /app
+
+COPY . .
 
 CMD ["npm", "run", "start"]
